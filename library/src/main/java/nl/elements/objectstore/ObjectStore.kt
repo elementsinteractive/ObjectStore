@@ -1,18 +1,12 @@
-import android.content.Context
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import io.reactivex.subjects.PublishSubject
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
-import nl.elements.objectstore.stores.PreferencesStore
-import nl.elements.objectstore.transformers.ConcealTransformer
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import com.facebook.android.crypto.keychain.AndroidConceal
-import com.facebook.crypto.CryptoConfig
-import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain
 
 
 /**

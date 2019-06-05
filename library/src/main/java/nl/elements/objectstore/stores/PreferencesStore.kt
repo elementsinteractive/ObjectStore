@@ -1,7 +1,8 @@
 package nl.elements.objectstore.stores
 
 import ObjectStore
-import ObjectStore.Event.*
+import ObjectStore.Event.Removed
+import ObjectStore.Event.Updated
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable

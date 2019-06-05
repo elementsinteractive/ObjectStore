@@ -1,10 +1,12 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore.Event.*
+import ObjectStore
+import ObjectStore.Event.Removed
+import ObjectStore.Event.Updated
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.provider.BaseColumns.*
+import android.provider.BaseColumns._ID
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
 import read

@@ -5,7 +5,7 @@
 - Implementations for `SharedPreferences`, `SqliteDatabase` and `File`.
  
 ```kotlin
-fun test(store: ObjectStore) {
+fun example(store: ObjectStore) {
     if ("id" !in store)
         store["id"] = 123L
 

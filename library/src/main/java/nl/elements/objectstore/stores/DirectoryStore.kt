@@ -1,5 +1,6 @@
 package nl.elements.objectstore.stores
 
+import ObjectStore
 import ObjectStore.Event.Removed
 import ObjectStore.Event.Updated
 import nl.elements.objectstore.Converter
