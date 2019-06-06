@@ -4,6 +4,7 @@ import ObjectStore
 import ObjectStore.Event.Removed
 import ObjectStore.Event.Updated
 import android.content.SharedPreferences
+import android.util.Base64
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import nl.elements.objectstore.Converter
@@ -24,27 +25,25 @@ class PreferencesStore(
         get() = preferences.all.keys
 
     override fun set(key: String, value: Any) {
-        preferences
-            .edit()
-            .putString(key, writeToBytes(key, value).toString(Charsets.UTF_8))
-            .apply()
+        writeToBytes(key, value)
+            .let { Base64.encodeToString(it, 0) }
+            .let { preferences.edit().putString(key, it).apply() }
 
         emit(Updated(key))
     }
 
     override fun <T : Any> get(key: String): T =
         preferences
-            .getString(key, null)
-            ?.byteInputStream(Charsets.UTF_8)
-            ?.read(key)!!
+            .getString(key, null)!!
+            .let { Base64.decode(it, 0) }
+            .inputStream()
+            .read(key)
 
     override fun contains(key: String): Boolean = preferences.contains(key)
 
     override fun remove(key: String) {
-        if (key in preferences) {
-            preferences.edit().remove(key).apply()
+        if (preferences.edit().remove(key).commit())
             emit(Removed(key))
-        }
     }
 
     fun toPreferences(): SharedPreferences = StorePreferences(this, preferences)
