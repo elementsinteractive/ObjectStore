@@ -52,8 +52,10 @@ class PreferencesStore(
 
 }
 
-private class StorePreferences(private val store: ObjectStore, private val preferences: SharedPreferences) :
-    SharedPreferences {
+private class StorePreferences(
+    private val store: ObjectStore,
+    private val preferences: SharedPreferences
+) : SharedPreferences {
 
     private val lock = Any()
     private val listeners = mutableMapOf<SharedPreferences.OnSharedPreferenceChangeListener, Disposable>()
@@ -119,8 +121,7 @@ private class StorePreferencesEditor(
 
     override fun putString(key: String?, value: String?): SharedPreferences.Editor = put(key, value)
 
-    override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor =
-        put(key, values)
+    override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor = put(key, values)
 
     private fun <T> put(key: String?, value: T) = apply { key?.let { store[key] = value!! } }
 
