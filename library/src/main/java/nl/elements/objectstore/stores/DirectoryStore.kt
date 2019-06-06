@@ -49,8 +49,7 @@ class DirectoryStore(
             emit(Removed(key))
     }
 
-    private fun fileOf(key: String) =
-        File(directory, key)
+    private fun fileOf(key: String) = File(directory, key)
 
     private fun File.ensure(): File = apply { createNewFile() }
 
