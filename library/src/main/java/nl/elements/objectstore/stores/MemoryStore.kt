@@ -1,5 +1,6 @@
 package nl.elements.objectstore.stores
 
+import ObjectStore.Event.*
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
 import read
@@ -18,18 +19,22 @@ class MemoryStore(
         get() = synchronized { data.keys.toSet() }
 
     override fun <T : Any> get(key: String): T =
-        synchronized {
-            data[key]!!
-                .let(::ByteArrayInputStream)
-                .use { read(key, it) }
-        }
+        synchronized { data[key]!! }
+            .let(::ByteArrayInputStream)
+            .use { read(key, it) }
 
-    override fun set(key: String, value: Any) = synchronized { data[key] = writeToBytes(key, value) }
+    override fun set(key: String, value: Any) {
+        val bytes = writeToBytes(key, value)
+
+        synchronized { data[key] = bytes }
+        emit(Updated(key))
+    }
 
     override fun contains(key: String): Boolean = synchronized { key in data }
 
     override fun remove(key: String) {
         synchronized { data.remove(key) }
+        emit(Removed(key))
     }
 
     private fun <R> synchronized(block: () -> R): R = synchronized(lock, block)
