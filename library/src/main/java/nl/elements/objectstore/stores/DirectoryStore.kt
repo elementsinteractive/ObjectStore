@@ -28,7 +28,7 @@ class DirectoryStore(
         fileOf(key)
             .ensure()
             .outputStream()
-            .write(key,value)
+            .write(key, value)
 
         emit(Updated(key))
     }
@@ -45,21 +45,13 @@ class DirectoryStore(
             .isNotEmpty()
 
     override fun remove(key: String) {
-        fileOf(key).run {
-            if (exists()) {
-                delete()
-                emit(Removed(key))
-            }
-        }
+        if (fileOf(key).delete())
+            emit(Removed(key))
     }
 
     private fun fileOf(key: String) =
         File(directory, key)
 
-    private fun File.ensure(): File =
-        apply {
-            if (!exists())
-                createNewFile()
-        }
+    private fun File.ensure(): File = apply { createNewFile() }
 
 }
