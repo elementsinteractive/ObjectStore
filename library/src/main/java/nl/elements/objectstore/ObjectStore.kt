@@ -28,6 +28,20 @@ interface ObjectStore : ObservableSource<ObjectStore.Event> {
 
     fun remove(key: String)
 
+    fun OutputStream.write(key: String, value: Any) =
+        ByteArrayOutputStream()
+            .also { converter.serialize(key, value, it) }
+            .toByteArray()
+            .inputStream()
+            .let { transformer.write(key, it, this@write) }
+
+    fun <T : Any> InputStream.read(key: String): T =
+        ByteArrayOutputStream()
+            .also { transformer.read(key, this@read, it) }
+            .toByteArray()
+            .inputStream()
+            .let { converter.deserialize(key, it) }
+
     sealed class Event(open val key: String) {
         data class Updated(override val key: String) : Event(key)
         data class Removed(override val key: String) : Event(key)
@@ -47,21 +61,7 @@ interface ObjectStore : ObservableSource<ObjectStore.Event> {
 
 fun ObjectStore.toObservable(): Observable<ObjectStore.Event> = Observable.defer { this }
 
-fun ObjectStore.write(key: String, value: Any, output: OutputStream) =
-    ByteArrayOutputStream()
-        .also { converter.serialize(key, value, it) }
-        .toByteArray()
-        .inputStream()
-        .let { transformer.write(key, it, output) }
-
 fun ObjectStore.writeToBytes(key: String, value: Any): ByteArray =
     ByteArrayOutputStream()
-        .also { write(key, value, it) }
+        .also { it.write(key, value) }
         .toByteArray()
-
-fun <T : Any> ObjectStore.read(key: String, input: InputStream): T =
-    ByteArrayOutputStream()
-        .also { transformer.read(key, input, it) }
-        .toByteArray()
-        .inputStream()
-        .let { converter.deserialize(key, it) }

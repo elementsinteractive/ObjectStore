@@ -2,6 +2,7 @@ package nl.elements.objectstore
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
+import nl.elements.objectstore.stores.MemoryStore
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,8 +18,13 @@ import org.junit.Assert.*
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("nl.element", appContext.packageName)
+        val context = InstrumentationRegistry.getTargetContext()
+        val store = MemoryStore()
+
+        store["key"] = "value"
+
+        val value: String = store["key"]
+
+        assertEquals("value", value)
     }
 }

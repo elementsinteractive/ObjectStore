@@ -1,10 +1,10 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore.Event.*
+import ObjectStore
+import ObjectStore.Event.Removed
+import ObjectStore.Event.Updated
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
-import read
-import write
 import writeToBytes
 import java.io.ByteArrayInputStream
 
@@ -21,7 +21,7 @@ class MemoryStore(
     override fun <T : Any> get(key: String): T =
         synchronized { data[key]!! }
             .let(::ByteArrayInputStream)
-            .use { read(key, it) }
+            .read(key)
 
     override fun set(key: String, value: Any) {
         val bytes = writeToBytes(key, value)
@@ -33,8 +33,7 @@ class MemoryStore(
     override fun contains(key: String): Boolean = synchronized { key in data }
 
     override fun remove(key: String) {
-        synchronized { data.remove(key) }
-        emit(Removed(key))
+        synchronized { data.remove(key) }?.let { emit(Removed(key)) }
     }
 
     private fun <R> synchronized(block: () -> R): R = synchronized(lock, block)

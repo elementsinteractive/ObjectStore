@@ -5,8 +5,6 @@ import ObjectStore.Event.Removed
 import ObjectStore.Event.Updated
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
-import read
-import write
 import java.io.File
 
 /**
@@ -30,7 +28,7 @@ class DirectoryStore(
         fileOf(key)
             .ensure()
             .outputStream()
-            .use { write(key, value, it) }
+            .write(key,value)
 
         emit(Updated(key))
     }
@@ -39,7 +37,7 @@ class DirectoryStore(
         fileOf(key)
             .ensure()
             .inputStream()
-            .use { read(key, it) }
+            .read(key)
 
     override fun contains(key: String): Boolean =
         directory

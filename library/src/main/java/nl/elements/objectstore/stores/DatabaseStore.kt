@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns._ID
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
-import read
 import writeToBytes
 
 /**
@@ -63,7 +62,7 @@ class DatabaseStore(
                 .takeIf { it.moveToFirst() }
                 ?.value
                 ?.inputStream()
-                ?.let { read<T>(key, it) }!!
+                ?.read(key)!!
         }
 
     override fun contains(key: String): Boolean =
@@ -104,7 +103,7 @@ class DatabaseStore(
 
     companion object {
 
-        val VALUE = "value"
+        const val VALUE = "value"
 
     }
 

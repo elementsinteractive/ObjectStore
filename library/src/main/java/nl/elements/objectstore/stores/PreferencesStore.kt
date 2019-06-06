@@ -8,7 +8,6 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.Transformer
-import read
 import writeToBytes
 
 /**
@@ -37,7 +36,7 @@ class PreferencesStore(
         preferences
             .getString(key, null)
             ?.byteInputStream(Charsets.UTF_8)
-            ?.let { read<T>(key, it) }!!
+            ?.read(key)!!
 
     override fun contains(key: String): Boolean = preferences.contains(key)
 
