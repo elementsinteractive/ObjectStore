@@ -16,8 +16,8 @@ import writeToBytes
  */
 
 class DatabaseStore(
-    val database: SQLiteDatabase,
-    val table: String = "key_value_store",
+    private val database: SQLiteDatabase,
+    private val table: String = "key_value_store",
     override val converter: Converter = Converter.DEFAULT,
     override val transformer: Transformer = Transformer.DEFAULT
 ) : ObjectStore.Base() {

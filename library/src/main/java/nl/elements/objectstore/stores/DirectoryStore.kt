@@ -12,7 +12,7 @@ import java.io.File
  */
 
 class DirectoryStore(
-    val directory: File,
+    private val directory: File,
     override val converter: Converter = Converter.DEFAULT,
     override val transformer: Transformer = Transformer.DEFAULT
 ) : ObjectStore.Base() {
