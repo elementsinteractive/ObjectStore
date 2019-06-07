@@ -1,6 +1,5 @@
 package nl.elements.objectstore.stores
 
-
 import android.content.SharedPreferences
 import android.util.Base64
 import io.reactivex.Observable

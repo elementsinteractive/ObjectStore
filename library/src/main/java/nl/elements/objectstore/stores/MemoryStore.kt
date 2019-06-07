@@ -2,10 +2,10 @@ package nl.elements.objectstore.stores
 
 import nl.elements.objectstore.Converter
 import nl.elements.objectstore.ObjectStore
-import nl.elements.objectstore.ObjectStore.Event.*
+import nl.elements.objectstore.ObjectStore.Event.Removed
+import nl.elements.objectstore.ObjectStore.Event.Updated
 import nl.elements.objectstore.Transformer
 import nl.elements.objectstore.writeToBytes
-import java.io.ByteArrayInputStream
 
 class MemoryStore(
     override val converter: Converter = Converter.DEFAULT,
