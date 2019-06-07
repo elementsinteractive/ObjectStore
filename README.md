@@ -79,7 +79,7 @@ fun aggregateWithNamespace(directory: File, preferences: SharedPreferences) {
     val store: ReadableObjectStore = stores.reduceWithNamespace()
 
     // read from the stores
-    val picture: Bitmap = store["picture:selfie"]
+    val picture: Bitmap = store["pictures:selfie"]
     val token: String = store["config:debug"]
 }
 ```
