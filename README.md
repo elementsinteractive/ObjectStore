@@ -59,6 +59,10 @@ fun aggregate(directory: File, preferences: SharedPreferences) {
     // reduce them into one store
     val stores = listOf(pictures, config)
     val store: ReadableObjectStore = stores.reduce()
+
+    // read from the stores
+    val picture: Bitmap = store["selfie"]
+    val token: String = store["debug"]
 }
 ```
 
@@ -74,6 +78,7 @@ fun aggregateWithNamespace(directory: File, preferences: SharedPreferences) {
     val stores = mapOf("pictures" to pictures, "config" to config)
     val store: ReadableObjectStore = stores.reduceWithNamespace()
 
+    // read from the stores
     val picture: Bitmap = store["picture:selfie"]
     val token: String = store["config:debug"]
 }
