@@ -33,7 +33,7 @@ fun observe(store: ObjectStore) {
 }
 ``` 
 
-## Encryption
+## Encrypting
 The store can be initialized with a adapter that can transform the incoming bytes into encrypted bytes and vice versa. By default there is no encryption enabled, but there is an implementation based on [Facebook's Conceal](https://github.com/facebook/conceal) included.
 ```kotlin
 fun conceal(context: Context) {
@@ -45,5 +45,36 @@ fun conceal(context: Context) {
         preferences = prefs,
         transformer = ConcealTransformer(crypto)
     )
+}
+```
+
+## Aggregating
+Each store has its own speciality (big values or a lot of small ones), but that is only interesting when you're writing to a store. When retrieving just want to query all the stores at once:
+```kotlin
+fun aggregate(directory: File, preferences: SharedPreferences) {
+    // define the stores
+    val pictures: ObjectStore = DirectoryStore(directory)
+    val config: ObjectStore = PreferencesStore(preferences)
+
+    // reduce them into one store
+    val stores = listOf(pictures, config)
+    val store: ReadableObjectStore = stores.reduce()
+}
+```
+
+The above method provides a read-only store, because it can not differentiate to which store it should persist to. If such functionality is desired, you can prefix your store:
+
+```kotlin
+fun aggregateWithNamespace(directory: File, preferences: SharedPreferences) {
+    // define the stores
+    val pictures: ObjectStore = DirectoryStore(directory)
+    val config: ObjectStore = PreferencesStore(preferences)
+
+    // reduce them into one store
+    val stores = mapOf("pictures" to pictures, "config" to config)
+    val store: ReadableObjectStore = stores.reduceWithNamespace()
+
+    val picture: Bitmap = store["picture:selfie"]
+    val token: String = store["config:debug"]
 }
 ```
