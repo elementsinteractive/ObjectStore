@@ -1,10 +1,15 @@
-# ObjectStore
-###### Convenient interface for persisting objects.
-- Customizable serialization
-- Customizable encryption
-- Implementations for `SharedPreferences`, `SqliteDatabase` and `File`.
- 
-```kotlin
+package nl.elements.objectstore
+
+import android.content.Context
+import android.graphics.Bitmap
+import com.facebook.android.crypto.keychain.AndroidConceal
+import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain
+import com.facebook.crypto.CryptoConfig
+import nl.elements.objectstore.stores.DirectoryStore
+import nl.elements.objectstore.stores.PreferencesStore
+import nl.elements.objectstore.transformers.ConcealTransformer
+import java.util.prefs.Preferences
+
 fun example(store: ObjectStore) {
     if ("id" !in store)
         store["id"] = 123L
@@ -13,12 +18,7 @@ fun example(store: ObjectStore) {
 
     store.remove("id")
 }
-```
 
-## Observing
-Each `ObjectStore` is (Rx) observable and will emit whenever something changes in store. 
-
-```kotlin
 fun observe(store: ObjectStore) {
     store
         .toObservable()
@@ -31,26 +31,18 @@ fun observe(store: ObjectStore) {
         }
         .subscribe(::println)
 }
-``` 
 
-## Encrypting
-The store can be initialized with a adapter that can transform the incoming bytes into encrypted bytes and vice versa. By default there is no encryption enabled, but there is an implementation based on [Facebook's Conceal](https://github.com/facebook/conceal) included.
-```kotlin
 fun conceal(context: Context) {
     val keyChain = SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256)
     val crypto = AndroidConceal.get().createDefaultCrypto(keyChain)
     val prefs = context.getSharedPreferences("example", Context.MODE_PRIVATE)
-    
+
     val store = PreferencesStore(
         preferences = prefs,
         transformer = ConcealTransformer(crypto)
     )
 }
-```
 
-## Aggregating
-Each store has its own speciality (big values or a lot of small ones), but that is only interesting when you're writing to a store. When retrieving just want to query all the stores at once:
-```kotlin
 fun aggregate(context: Context) {
     // define the stores
     val pictures: ObjectStore = DirectoryStore(context.cacheDir)
@@ -61,16 +53,8 @@ fun aggregate(context: Context) {
     // reduce them into one store
     val stores = listOf(pictures, config)
     val store: ReadableObjectStore = stores.reduce()
-    
-    // get from all the stores
-    val picture: Bitmap = store["selfie"]
-    val token: String = store["token"]
 }
-```
 
-The above method provides a read-only store, because it can not differentiate to which store it should persist to. If such functionality is desired, you can prefix your store:
-
-```kotlin
 fun aggregateWithNamespace(context: Context) {
     // define the stores
     val pictures: ObjectStore = DirectoryStore(context.cacheDir)
@@ -81,9 +65,7 @@ fun aggregateWithNamespace(context: Context) {
     // reduce them into one store
     val stores = mapOf("pictures" to pictures, "config" to config)
     val store: ReadableObjectStore = stores.reduceWithNamespace()
-    
-    // get from all the stores
-    val picture: Bitmap = store["pictures:selfie"]
-    val token: String = store["config:token"]
+
+    val picture: Bitmap = store["picture:selfie"]
+    val token: String = store["config:debug"]
 }
-```
