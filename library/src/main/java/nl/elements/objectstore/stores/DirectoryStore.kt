@@ -1,9 +1,9 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore
-import ObjectStore.Event.Removed
-import ObjectStore.Event.Updated
 import nl.elements.objectstore.Converter
+import nl.elements.objectstore.ObjectStore
+import nl.elements.objectstore.ObjectStore.Event.Removed
+import nl.elements.objectstore.ObjectStore.Event.Updated
 import nl.elements.objectstore.Transformer
 import java.io.File
 

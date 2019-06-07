@@ -1,14 +1,15 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore
-import ObjectStore.Event.Removed
-import ObjectStore.Event.Updated
+
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import nl.elements.objectstore.Converter
+import nl.elements.objectstore.ObjectStore
+import nl.elements.objectstore.ObjectStore.Event.Removed
+import nl.elements.objectstore.ObjectStore.Event.Updated
 import nl.elements.objectstore.Transformer
-import writeToBytes
+import nl.elements.objectstore.writeToBytes
 
 /**
  * A store that reads and writes its values from the given `SharedPreferences`. All values are stored as `String`.
