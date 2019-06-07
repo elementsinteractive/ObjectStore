@@ -1,11 +1,10 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore
-import ObjectStore.Event.Removed
-import ObjectStore.Event.Updated
 import nl.elements.objectstore.Converter
+import nl.elements.objectstore.ObjectStore
+import nl.elements.objectstore.ObjectStore.Event.*
 import nl.elements.objectstore.Transformer
-import writeToBytes
+import nl.elements.objectstore.writeToBytes
 import java.io.ByteArrayInputStream
 
 class MemoryStore(
@@ -20,7 +19,7 @@ class MemoryStore(
 
     override fun <T : Any> get(key: String): T =
         synchronized { data[key]!! }
-            .let(::ByteArrayInputStream)
+            .inputStream()
             .read(key)
 
     override fun set(key: String, value: Any) {

@@ -1,15 +1,15 @@
 package nl.elements.objectstore.stores
 
-import ObjectStore
-import ObjectStore.Event.Removed
-import ObjectStore.Event.Updated
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns._ID
 import nl.elements.objectstore.Converter
+import nl.elements.objectstore.ObjectStore
+import nl.elements.objectstore.ObjectStore.Event.Removed
+import nl.elements.objectstore.ObjectStore.Event.Updated
 import nl.elements.objectstore.Transformer
-import writeToBytes
+import nl.elements.objectstore.writeToBytes
 
 /**
  * A store that maintains its own table for storing key-value pairs.
@@ -40,9 +40,7 @@ class DatabaseStore(
                 )
             """
 
-        database
-            .rawQuery(query, null)
-            .close()
+        database.rawQuery(query, null).close()
     }
 
     override fun set(key: String, value: Any) {
