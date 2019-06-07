@@ -1,3 +1,4 @@
+[ ![Download](https://api.bintray.com/packages/elementsinteractive/maven/ObjectStore/images/download.svg) ](https://bintray.com/elementsinteractive/maven/ObjectStore/_latestVersion)
 # ObjectStore
 ###### Convenient interface for persisting objects.
 - Customizable serialization
