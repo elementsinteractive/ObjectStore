@@ -2,7 +2,7 @@
 # ObjectStore
 ###### Convenient interface for persisting objects.
 ``` groovy
-compile "nl.elements.objectstore:objectstore:+"
+implementation "nl.elements.objectstore:objectstore:+"
 ```
 - Customizable serialization
 - Customizable encryption
