@@ -1,6 +1,9 @@
 [ ![Download](https://api.bintray.com/packages/elementsinteractive/maven/ObjectStore/images/download.svg) ](https://bintray.com/elementsinteractive/maven/ObjectStore/_latestVersion)
 # ObjectStore
 ###### Convenient interface for persisting objects.
+``` groovy
+implementation "nl.elements.objectstore:objectstore:+"
+```
 - Customizable serialization
 - Customizable encryption
 - Implementations for `SharedPreferences`, `SqliteDatabase` and `File`.
@@ -35,7 +38,7 @@ fun observe(store: ObjectStore) {
 ``` 
 
 ## Encrypting
-The store can be initialized with a adapter that can transform the incoming bytes into encrypted bytes and vice versa. By default there is no encryption enabled, but there is an implementation based on [Facebook's Conceal](https://github.com/facebook/conceal) included.
+The store can be initialized with an adapter that can transform the incoming bytes into encrypted bytes and vice versa. By default there is no encryption enabled, but there is an implementation based on [Facebook's Conceal](https://github.com/facebook/conceal) included.
 ```kotlin
 fun conceal(context: Context) {
     val keyChain = SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256)
@@ -63,7 +66,7 @@ fun aggregate(directory: File, preferences: SharedPreferences) {
 
     // read from the stores
     val picture: Bitmap = store["selfie"]
-    val token: String = store["debug"]
+    val token: String = store["token"]
 }
 ```
 
@@ -77,10 +80,10 @@ fun aggregateWithNamespace(directory: File, preferences: SharedPreferences) {
 
     // reduce them into one store
     val stores = mapOf("pictures" to pictures, "config" to config)
-    val store: ReadableObjectStore = stores.reduceWithNamespace()
+    val store: ObjectStore = stores.reduceWithNamespace()
 
     // read from the stores
     val picture: Bitmap = store["pictures:selfie"]
-    val token: String = store["config:debug"]
+    val token: String = store["config:token"]
 }
 ```
