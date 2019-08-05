@@ -1,4 +1,4 @@
-package nl.elements.objectstore.transformers
+package nl.elements.objectstore.android.transformers
 
 import com.facebook.crypto.Crypto
 import com.facebook.crypto.Entity

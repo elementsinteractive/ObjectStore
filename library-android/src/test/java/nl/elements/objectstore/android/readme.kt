@@ -1,4 +1,4 @@
-package nl.elements.objectstore
+package nl.elements.objectstore.android
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,11 +6,11 @@ import android.graphics.Bitmap
 import com.facebook.android.crypto.keychain.AndroidConceal
 import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain
 import com.facebook.crypto.CryptoConfig
+import nl.elements.objectstore.*
 import nl.elements.objectstore.stores.DirectoryStore
-import nl.elements.objectstore.stores.PreferencesStore
-import nl.elements.objectstore.transformers.ConcealTransformer
+import nl.elements.objectstore.android.stores.PreferencesStore
+import nl.elements.objectstore.android.transformers.ConcealTransformer
 import java.io.File
-import java.util.prefs.Preferences
 
 fun example(store: ObjectStore) {
     if ("id" !in store)

@@ -1,8 +1,9 @@
-package nl.elements.objectstore
+package nl.elements.objectstore.android
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
-import nl.elements.objectstore.stores.PreferencesStore
+import nl.elements.objectstore.ObjectStore
+import nl.elements.objectstore.android.stores.PreferencesStore
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

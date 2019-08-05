@@ -1,4 +1,4 @@
-package nl.elements.objectstore.stores
+package nl.elements.objectstore.android.stores
 
 import android.content.SharedPreferences
 import android.util.Base64
@@ -117,10 +117,11 @@ private class StorePreferencesEditor(
 
     override fun putFloat(key: String?, value: Float): SharedPreferences.Editor = put(key, value)
 
-    override fun putString(key: String?, value: String?): SharedPreferences.Editor = put(key, value)
+    override fun putString(key: String?, value: String?): SharedPreferences.Editor = put(key, value!!)
 
-    override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor = put(key, values)
+    override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor =
+        put(key, values ?: emptySet())
 
-    private fun <T> put(key: String?, value: T) = apply { key?.let { store[key] = value!! } }
+    private fun <T : Any> put(key: String?, value: T) = apply { key?.let { store[it] = value } }
 
 }
