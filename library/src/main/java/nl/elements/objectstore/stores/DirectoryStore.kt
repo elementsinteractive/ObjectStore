@@ -22,7 +22,7 @@ class DirectoryStore(
     }
 
     override val keys: Set<String>
-        get() = directory.list().toSet()
+        get() = directory.list()!!.toSet()
 
     override fun set(key: String, value: Any) {
         fileOf(key)
@@ -41,7 +41,7 @@ class DirectoryStore(
 
     override fun contains(key: String): Boolean =
         directory
-            .list { _, name -> name == key }
+            .list { _, name -> name == key }!!
             .isNotEmpty()
 
     override fun remove(key: String) {

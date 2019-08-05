@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        versionCode 1
+        versionName rootProject.version
+        minSdkVersion 14
+        targetSdkVersion 28
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    implementation project(':library')
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation 'com.facebook.conceal:conceal:2.0.2'
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.2'
+}
+
+dependencies {
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    androidTestImplementation "androidx.test:core:1.2.0"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test:rules:1.2.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+def properties = project.rootProject.file('local.properties').withDataInputStream { stream ->
+    def props = new Properties()
+    props.load(stream)
+    props
+}
+
+publish {
+    userOrg 'elementsinteractive'
+    groupId 'nl.elements.objectstore.android'
+    artifactId 'objectstore-android'
+    publishVersion rootProject.version
+    uploadName 'ObjectStore Android'
+    desc 'Android specific implementations for ObjectStore'
+    website 'https://github.com/elementsinteractive/ObjectStore'
+
+    bintrayUser properties['BINTRAY_USER']
+    bintrayKey properties['BINTRAY_KEY']
+
+    dryRun false
+    override true
+}

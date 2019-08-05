@@ -1,4 +1,4 @@
-package nl.elements.objectstore.stores
+package nl.elements.objectstore.android.stores
 
 import android.content.ContentValues
 import android.database.Cursor
