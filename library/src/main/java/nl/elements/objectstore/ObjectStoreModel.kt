@@ -15,7 +15,7 @@ abstract class ObjectStoreModel(
 
     /**
      * Delegate an item with type string
-     * @param default default string value
+     * @param default value
      * @param key custom key
      */
     protected fun stringPref(
