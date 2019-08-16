@@ -15,24 +15,24 @@ interface Converter {
      * Convert the value into bytes that will be used for IO.
      */
 
-    fun serialize(key: String, value: Any, output: OutputStream)
+    fun serialize(key: String, value: Any?, output: OutputStream)
 
     /**
      * Convert the bytes from IO into the desired object.
      */
 
-    fun <T : Any> deserialize(key: String, input: InputStream): T
+    fun <T : Any> deserialize(key: String, input: InputStream): T?
 
     companion object {
 
         val DEFAULT = object : Converter {
 
-            override fun serialize(key: String, value: Any, output: OutputStream) =
+            override fun serialize(key: String, value: Any?, output: OutputStream) =
                 ObjectOutputStream(output).writeObject(value)
 
             @Suppress("UNCHECKED_CAST")
-            override fun <T : Any> deserialize(key: String, input: InputStream): T =
-                ObjectInputStream(input).readObject() as T
+            override fun <T : Any> deserialize(key: String, input: InputStream): T? =
+                ObjectInputStream(input).readObject() as T?
 
         }
 

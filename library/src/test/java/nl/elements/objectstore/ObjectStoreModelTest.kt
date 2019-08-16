@@ -18,12 +18,18 @@ class ObjectStoreModelTest {
 
         assertEquals(newValue, model.name)
         assertEquals(DEFAULT_VALUE, model.nameWithDefault)
+
+        assertEquals(null, model.nameNull)
+        assertEquals(DEFAULT_VALUE, model.nameNullWithDefault)
     }
 
     companion object {
         class InMemoryModel : ObjectStoreModel(MemoryStore()) {
-            var name by stringPref()
-            var nameWithDefault by stringPref(DEFAULT_VALUE)
+            var name by stringItem()
+            var nameWithDefault by stringItem(DEFAULT_VALUE)
+
+            var nameNull by nullableStringItem()
+            var nameNullWithDefault by nullableStringItem(DEFAULT_VALUE)
         }
 
         const val DEFAULT_VALUE = "default"

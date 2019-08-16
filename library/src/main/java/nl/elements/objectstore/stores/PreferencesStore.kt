@@ -24,7 +24,7 @@ class PreferencesStore(
     override val keys: Set<String>
         get() = preferences.all.keys
 
-    override fun set(key: String, value: Any) {
+    override fun set(key: String, value: Any?) {
         writeToBytes(key, value)
             .let { Base64.encodeToString(it, 0) }
             .let { preferences.edit().putString(key, it).apply() }
@@ -32,7 +32,7 @@ class PreferencesStore(
         emit(Updated(key))
     }
 
-    override fun <T : Any> get(key: String): T =
+    override fun <T : Any> get(key: String): T? =
         preferences
             .getString(key, null)!!
             .let { Base64.decode(it, 0) }

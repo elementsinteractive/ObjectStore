@@ -24,7 +24,7 @@ class DirectoryStore(
     override val keys: Set<String>
         get() = directory.list().toSet()
 
-    override fun set(key: String, value: Any) {
+    override fun set(key: String, value: Any?) {
         fileOf(key)
             .ensure()
             .outputStream()
@@ -33,7 +33,7 @@ class DirectoryStore(
         emit(Updated(key))
     }
 
-    override fun <T : Any> get(key: String): T =
+    override fun <T : Any> get(key: String): T? =
         fileOf(key)
             .ensure()
             .inputStream()

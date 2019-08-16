@@ -4,7 +4,7 @@ interface ReadableObjectStore {
 
     val keys: Set<String>
 
-    operator fun <T : Any> get(key: String): T
+    operator fun <T : Any> get(key: String): T?
 
     operator fun contains(key: String): Boolean
 
@@ -39,7 +39,7 @@ private fun combine(l: ReadableObjectStore, r: ReadableObjectStore): ReadableObj
         override val keys: Set<String>
             get() = l.keys.toMutableSet().apply { addAll(r.keys) }
 
-        override fun <T : Any> get(key: String): T =
+        override fun <T : Any> get(key: String): T? =
             when (key) {
                 in l -> l[key]
                 else -> r[key]

@@ -17,12 +17,12 @@ class MemoryStore(
     override val keys: Set<String>
         get() = synchronized { data.keys.toSet() }
 
-    override fun <T : Any> get(key: String): T =
+    override fun <T : Any> get(key: String): T? =
         synchronized { data[key]!! }
             .inputStream()
             .read(key)
 
-    override fun set(key: String, value: Any) {
+    override fun set(key: String, value: Any?) {
         val bytes = writeToBytes(key, value)
 
         synchronized { data[key] = bytes }

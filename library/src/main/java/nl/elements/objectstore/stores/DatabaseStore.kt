@@ -36,14 +36,14 @@ class DatabaseStore(
             """
                 CREATE TABLE IF NOT EXISTS $table (
                     $_ID STRING PRIMARY KEY UNIQUE,
-                    $VALUE BLOB NOT NULL
+                    $VALUE BLOB
                 )
             """
 
         database.rawQuery(query, null).close()
     }
 
-    override fun set(key: String, value: Any) {
+    override fun set(key: String, value: Any?) {
         val bytes = writeToBytes(key, value)
         val values = ContentValues().apply {
             put(_ID, key)

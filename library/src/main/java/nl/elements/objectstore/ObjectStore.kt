@@ -18,18 +18,18 @@ interface ObjectStore : ReadableObjectStore, ObservableSource<ObjectStore.Event>
     val converter: Converter
     val transformer: Transformer
 
-    operator fun set(key: String, value: Any)
+    operator fun set(key: String, value: Any?)
 
     fun remove(key: String)
 
-    fun OutputStream.write(key: String, value: Any) =
+    fun OutputStream.write(key: String, value: Any?) =
         ByteArrayOutputStream()
             .also { converter.serialize(key, value, it) }
             .toByteArray()
             .inputStream()
             .let { transformer.write(key, it, this@write) }
 
-    fun <T : Any> InputStream.read(key: String): T =
+    fun <T : Any> InputStream.read(key: String): T? =
         ByteArrayOutputStream()
             .also { transformer.read(key, this@read, it) }
             .toByteArray()
@@ -57,7 +57,7 @@ fun ObjectStore.toObservable(): Observable<ObjectStore.Event> = Observable.defer
 
 fun ObjectStore.toReadableObjectStore(): ReadableObjectStore = this
 
-fun ObjectStore.writeToBytes(key: String, value: Any): ByteArray =
+fun ObjectStore.writeToBytes(key: String, value: Any?): ByteArray =
     ByteArrayOutputStream()
         .also { it.write(key, value) }
         .toByteArray()
@@ -114,13 +114,13 @@ private fun ObjectStore.withNamespace(namespace: String, next: ObjectStore): Obj
         override val keys: Set<String>
             get() = store.keys.map { namespace + it }.toMutableSet().apply { addAll(next.keys) }
 
-        override fun <T : Any> get(key: String): T =
+        override fun <T : Any> get(key: String): T? =
             key.removeNamespace()?.let(store::get) ?: next[key]
 
         override fun contains(key: String): Boolean =
             key.removeNamespace()?.let(store::contains) ?: next.contains(key)
 
-        override fun set(key: String, value: Any) =
+        override fun set(key: String, value: Any?) =
             key.removeNamespace()?.let { store[it] = value } ?: next.set(key, value)
 
         override fun remove(key: String) = key.removeNamespace()?.let(store::remove) ?: next.remove(key)
@@ -148,7 +148,7 @@ private fun unknownNamespaceObjectStore(): ObjectStore = object : ObjectStore {
     override val transformer: Transformer = Transformer.DEFAULT
     override val keys: Set<String> = emptySet()
 
-    override fun set(key: String, value: Any) = throw UnknownNamespaceException(key)
+    override fun set(key: String, value: Any?) = throw UnknownNamespaceException(key)
 
     override fun remove(key: String) = throw UnknownNamespaceException(key)
 
