@@ -95,7 +95,7 @@ class InMemoryStoreTest {
     }
 }
 
-private fun <T : Any> ObjectStore.setAndGet(key: String, value: T): T {
+private fun <T : Any> ObjectStore.setAndGet(key: String, value: T): T? {
     set(key, value)
     return this[key]
 }
