@@ -4,5 +4,7 @@ import nl.elements.objectstore.ObjectStoreModel
 import kotlin.properties.ReadWriteProperty
 
 abstract class AbstractItem<T : Any?> : ReadWriteProperty<ObjectStoreModel, T>, ItemKey {
-    abstract override val key: String?
+}
+
+abstract class NullableAbstractItem<T : Any?> : ReadWriteProperty<ObjectStoreModel, T?>, ItemKey {
 }

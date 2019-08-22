@@ -21,7 +21,7 @@ class InMemoryStoreTest {
         val key = "key"
         val value = "Danny"
 
-        store.set(key, value)
+        store[key] = value
 
         assertTrue(store.contains(key))
     }
@@ -85,7 +85,7 @@ class InMemoryStoreTest {
         val key = "name"
         val value = "Danny"
 
-        store.set(key, value)
+        store[key] = value
 
         val actual = store.keys
 

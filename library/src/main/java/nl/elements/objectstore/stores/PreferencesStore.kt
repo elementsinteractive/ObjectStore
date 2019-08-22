@@ -42,8 +42,9 @@ class PreferencesStore(
     override fun contains(key: String): Boolean = preferences.contains(key)
 
     override fun remove(key: String) {
-        if (preferences.edit().remove(key).commit())
+        if (preferences.edit().remove(key).commit()) {
             emit(Removed(key))
+        }
     }
 
     fun toPreferences(): SharedPreferences = StorePreferences(this, preferences)

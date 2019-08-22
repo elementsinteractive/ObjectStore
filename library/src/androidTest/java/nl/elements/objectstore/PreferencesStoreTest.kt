@@ -28,7 +28,7 @@ class PreferencesStoreTest {
         val key = "contains"
         val name = "Danny"
 
-        store.set(key, name)
+        store[key] = name
 
         assertTrue(store.contains(key))
     }
@@ -92,7 +92,7 @@ class PreferencesStoreTest {
         val key = "name"
         val value = "Danny"
 
-        store.set(key, value)
+        store[key] = value
 
         val actual = store.keys
 
