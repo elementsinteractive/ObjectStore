@@ -1,5 +1,8 @@
 [ ![Download](https://api.bintray.com/packages/elementsinteractive/maven/ObjectStore/images/download.svg) ](https://bintray.com/elementsinteractive/maven/ObjectStore/_latestVersion)
 # ObjectStore
+
+[![kotlin](https://img.shields.io/badge/kotlin-1.3.31-blue.svg)]()
+
 ###### Convenient interface for persisting objects.
 ``` groovy
 implementation "nl.elements.objectstore:objectstore:+"
@@ -18,6 +21,19 @@ fun example(store: ObjectStore) {
     store.remove("id")
 }
 ```
+
+#### Define a model
+
+```kotlin
+class AppData : ObjectStoreModel(InMemoryStore()) {
+    var username by stringItem()
+    var age by intItem()
+    var hasSeenOnboarding by booleanItem()
+    var lastSeen by longItem()
+    var rating by floatItem()
+}
+```
+
 
 ## Observing
 Each `ObjectStore` is (Rx) observable and will emit whenever something changes in store. 
