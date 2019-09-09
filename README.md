@@ -27,8 +27,10 @@ fun example(store: ObjectStore) {
 ```kotlin
 class AppData : ObjectStoreModel(InMemoryStore()) {
     var username by stringItem()
+    val lastname by nullableStringItem()
     var age by intItem()
     var hasSeenOnboarding by booleanItem()
+    val landedOnDashboard by booleanNullabeItem()
     var lastSeen by longItem()
     var rating by floatItem()
 }
