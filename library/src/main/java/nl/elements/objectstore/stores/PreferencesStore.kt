@@ -69,9 +69,9 @@ private class StorePreferences(
 
     override fun getFloat(key: String?, defValue: Float): Float = get(key, defValue)
 
-    override fun getString(key: String?, defValue: String): String? = get(key, defValue)
+    override fun getString(key: String?, defValue: String?): String? = get(key, defValue)
 
-    override fun getStringSet(key: String?, defValues: MutableSet<String>): MutableSet<String>? = get(key, defValues)
+    override fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>? = get(key, defValues)
 
     override fun getAll(): MutableMap<String, *> =
         store
@@ -100,7 +100,7 @@ private class StorePreferences(
         }
     }
 
-    private fun <T : Any> get(key: String?, defValue: T): T = key?.let { store.get<T>(it) } ?: defValue
+    private fun <T : Any> get(key: String?, defValue: T?): T = key?.let { store.get<T>(it) } ?: defValue!!
 
 }
 
