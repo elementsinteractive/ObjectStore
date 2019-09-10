@@ -40,7 +40,7 @@ jobs:
           command: ./gradlew dependencies
       - run:
           name: Assemble and Test artifacts
-          command: ./gradlew bundleDebug assembleDebug
+          command: ./gradlew bundleDebugAar assembleDebug
       - <<: *persist_workspace
 
   check:
