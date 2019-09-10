@@ -14,10 +14,10 @@ class InMemoryStoreTest {
     fun setupTests() {
         store = createStore()
     }
-    
+
     @Test
     fun `Store contains given key`() {
-        
+
         val key = "key"
         val value = "Danny"
 
@@ -101,4 +101,3 @@ private fun <T : Any> ObjectStore.setAndGet(key: String, value: T): T {
 }
 
 private fun createStore() = MemoryStore()
-

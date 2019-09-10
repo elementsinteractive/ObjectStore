@@ -51,7 +51,7 @@ jobs:
       - <<: *attach_workspace
       - run:
           name: Check app and dependencies
-          command: ./gradlew app:lintDebug testDebug spotlessCheck
+          command: ./gradlew library:lintDebug testDebug spotlessCheck detektCheck
       - run:
           name: Save test results
           command: |

@@ -17,7 +17,7 @@ class PreferencesStoreTest {
     fun setupTests() {
         store = createStore()
     }
-    
+
     @After
     fun clear() {
         createStore().toPreferences().edit().clear().commit()

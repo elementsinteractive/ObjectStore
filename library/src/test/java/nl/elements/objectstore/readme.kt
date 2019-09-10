@@ -10,7 +10,6 @@ import nl.elements.objectstore.stores.DirectoryStore
 import nl.elements.objectstore.stores.PreferencesStore
 import nl.elements.objectstore.transformers.ConcealTransformer
 import java.io.File
-import java.util.prefs.Preferences
 
 fun example(store: ObjectStore) {
     if ("id" !in store)

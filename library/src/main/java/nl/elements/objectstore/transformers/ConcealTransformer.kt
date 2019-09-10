@@ -17,5 +17,4 @@ class ConcealTransformer(private val crypto: Crypto) : Transformer {
         crypto
             .encrypt(input.readBytes(), Entity.create(key))
             .let(output::write)
-
 }

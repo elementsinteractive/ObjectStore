@@ -8,7 +8,6 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
-
 /**
  * Supplies a basic abstraction for CRUD operations.
  */
@@ -48,9 +47,7 @@ interface ObjectStore : ReadableObjectStore, ObservableSource<ObjectStore.Event>
         final override fun subscribe(observer: Observer<in Event>) = subject.subscribe(observer)
 
         protected fun emit(event: Event) = subject.onNext(event)
-
     }
-
 }
 
 fun ObjectStore.toObservable(): Observable<ObjectStore.Event> = Observable.defer { this }
@@ -62,7 +59,7 @@ fun ObjectStore.writeToBytes(key: String, value: Any): ByteArray =
         .also { it.write(key, value) }
         .toByteArray()
 
-/// Utils for reducing `ObjectStore` which prefixes each key with the given `String` and delimiter
+// / Utils for reducing `ObjectStore` which prefixes each key with the given `String` and delimiter
 
 private const val DEFAULT_DELIMITER = ":"
 
@@ -139,7 +136,6 @@ private fun ObjectStore.withNamespace(namespace: String, next: ObjectStore): Obj
                 is ObjectStore.Event.Updated -> ObjectStore.Event.Updated(namespace + event.key)
                 is ObjectStore.Event.Removed -> ObjectStore.Event.Removed(namespace + event.key)
             }
-
     }
 
 private fun unknownNamespaceObjectStore(): ObjectStore = object : ObjectStore {
@@ -158,7 +154,6 @@ private fun unknownNamespaceObjectStore(): ObjectStore = object : ObjectStore {
 
     override fun subscribe(observer: Observer<in ObjectStore.Event>) {
     }
-
 }
 
 class UnknownNamespaceException internal constructor(key: String) : Exception(key)

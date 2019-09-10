@@ -14,6 +14,12 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.github.ben-manes.versions' version '0.24.0'
+    id 'com.diffplug.gradle.spotless' version '3.24.2'
+    id 'io.gitlab.arturbosch.detekt' version '1.0.1'
+}
+
 allprojects {
     repositories {
         google()
@@ -21,6 +27,23 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+subprojects {
+    spotless {
+        kotlin {
+            target "**/*.kt"
+            ktlint("0.33.0")
+        }
+    }
+}
+
+task detektCheck(type: io.gitlab.arturbosch.detekt.Detekt) {
+    description = "Runs a failfast detekt build."
+
+    input = files("$projectDir/library/src")
+    config = files("$rootDir/detekt.yml")
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*,.*/res/.*"
+    debug = false
+    parallel = true
+    disableDefaultRuleSets = true
+    ignoreFailures = false
 }

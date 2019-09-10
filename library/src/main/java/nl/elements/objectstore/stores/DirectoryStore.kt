@@ -52,5 +52,4 @@ class DirectoryStore(
     private fun fileOf(key: String) = File(directory, key)
 
     private fun File.ensure(): File = apply { createNewFile() }
-
 }

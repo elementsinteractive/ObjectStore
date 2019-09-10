@@ -47,7 +47,6 @@ class PreferencesStore(
     }
 
     fun toPreferences(): SharedPreferences = StorePreferences(this, preferences)
-
 }
 
 private class StorePreferences(
@@ -101,7 +100,6 @@ private class StorePreferences(
     }
 
     private fun <T : Any> get(key: String?, defValue: T?): T = key?.let { store.get<T>(it) } ?: defValue!!
-
 }
 
 private class StorePreferencesEditor(
@@ -122,5 +120,4 @@ private class StorePreferencesEditor(
     override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor = put(key, values)
 
     private fun <T> put(key: String?, value: T) = apply { key?.let { store[key] = value!! } }
-
 }

@@ -32,10 +32,6 @@ interface Transformer {
             override fun write(key: String, input: InputStream, output: OutputStream) {
                 input.copyTo(output)
             }
-
         }
-
     }
-
 }
-

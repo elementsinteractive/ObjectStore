@@ -102,7 +102,5 @@ class DatabaseStore(
     companion object {
 
         const val VALUE = "value"
-
     }
-
 }

@@ -7,10 +7,9 @@ interface ReadableObjectStore {
     operator fun <T : Any> get(key: String): T
 
     operator fun contains(key: String): Boolean
-
 }
 
-/// Utils for reducing `ReadableObjectStore`
+// / Utils for reducing `ReadableObjectStore`
 
 /**
  * Reduces all `ObjectStore`s (in sequence) into one `ObjectStore`.
@@ -30,8 +29,7 @@ fun Iterable<ReadableObjectStore>.reduce() = asSequence().reduce()
 
 fun Sequence<ReadableObjectStore>.reduce(): ReadableObjectStore = reduce(::combine)
 
-
-/// Utility functions
+// / Utility functions
 
 private fun combine(l: ReadableObjectStore, r: ReadableObjectStore): ReadableObjectStore =
     object : ReadableObjectStore {
@@ -46,5 +44,4 @@ private fun combine(l: ReadableObjectStore, r: ReadableObjectStore): ReadableObj
             }
 
         override fun contains(key: String): Boolean = key in l || key in r
-
     }
