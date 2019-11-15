@@ -62,17 +62,17 @@ private class StorePreferences(
     override fun contains(key: String?): Boolean =
         key?.let { store.contains(it) } ?: false
 
-    override fun getBoolean(key: String?, defValue: Boolean): Boolean = get(key, defValue)
+    override fun getBoolean(key: String?, defValue: Boolean): Boolean = get(key, defValue) ?: defValue
 
-    override fun getInt(key: String?, defValue: Int): Int = get(key, defValue)
+    override fun getInt(key: String?, defValue: Int): Int = get(key, defValue) ?: defValue
 
-    override fun getLong(key: String?, defValue: Long): Long = get(key, defValue)
+    override fun getLong(key: String?, defValue: Long): Long = get(key, defValue) ?: defValue
 
-    override fun getFloat(key: String?, defValue: Float): Float = get(key, defValue)
+    override fun getFloat(key: String?, defValue: Float): Float = get(key, defValue) ?: defValue
 
-    override fun getString(key: String?, defValue: String): String? = get(key, defValue)
+    override fun getString(key: String, defValue: String?): String? = get(key, defValue)
 
-    override fun getStringSet(key: String?, defValues: MutableSet<String>): MutableSet<String>? = get(key, defValues)
+    override fun getStringSet(key: String, defValues: MutableSet<String>?): MutableSet<String>? = get(key, defValues)
 
     override fun getAll(): MutableMap<String, *> =
         store
@@ -101,7 +101,7 @@ private class StorePreferences(
         }
     }
 
-    private fun <T : Any> get(key: String?, defValue: T): T = key?.let { store.get<T>(it) } ?: defValue
+    private fun <T : Any> get(key: String?, defValue: T?): T? = key?.let { store.get<T>(it) } ?: defValue
 
 }
 

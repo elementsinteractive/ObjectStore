@@ -54,13 +54,13 @@ class DatabaseStore(
         emit(Updated(key))
     }
 
-    override fun <T : Any> get(key: String): T =
+    override fun <T : Any> get(key: String): T? =
         queryById(key, VALUE).use { cursor ->
             cursor
                 .takeIf { it.moveToFirst() }
                 ?.value
                 ?.inputStream()
-                ?.read(key)!!
+                ?.read(key)
         }
 
     override fun contains(key: String): Boolean =
