@@ -36,5 +36,4 @@ class MemoryStore(
     }
 
     private fun <R> synchronized(block: () -> R): R = synchronized(lock, block)
-
 }

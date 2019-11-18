@@ -39,11 +39,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
-def properties = project.rootProject.file('local.properties').withDataInputStream { stream ->
-    def props = new Properties()
-    props.load(stream)
-    props
-}
+//def properties = project.rootProject.file('local.properties').withDataInputStream { stream ->
+//    def props = new Properties()
+//    props.load(stream)
+//    props
+//}
 
 publish {
     userOrg 'elementsinteractive'
@@ -54,8 +54,8 @@ publish {
     desc 'Convenient interface for persisting objects.'
     website 'https://github.com/elementsinteractive/ObjectStore'
 
-    bintrayUser properties['BINTRAY_USER']
-    bintrayKey properties['BINTRAY_KEY']
+//    bintrayUser properties['BINTRAY_USER']
+//    bintrayKey properties['BINTRAY_KEY']
 
     dryRun false
     override true

@@ -33,9 +33,6 @@ interface Converter {
             @Suppress("UNCHECKED_CAST")
             override fun <T : Any> deserialize(key: String, input: InputStream): T =
                 ObjectInputStream(input).readObject() as T
-
         }
-
     }
-
 }
